@@ -8,4 +8,4 @@ struct mozo {
     char nombre[50];
     char password[20];
     float totalcomision;
-}
+};
