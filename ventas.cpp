@@ -9,3 +9,15 @@ struct mozo {
     char password[20];
     float totalcomision;
 };
+struct producto{
+    int codigo;
+    char descripcion;
+    float precio;
+    int stockactual;
+};
+struct comanda {
+    int idmozo;
+    int codigoproducto;
+    int cantidad;
+    float comision;
+};
