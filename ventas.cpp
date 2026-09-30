@@ -21,3 +21,6 @@ struct comanda {
     int cantidad;
     float comision;
 };
+
+const float TASA_COMISION = 0.10f ; 
+
