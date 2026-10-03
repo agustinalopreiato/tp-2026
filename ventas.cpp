@@ -23,4 +23,4 @@ struct comanda {
 };
 
 const float TASA_COMISION = 0.10f ; 
-
+const int K = 4;  
