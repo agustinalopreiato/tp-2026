@@ -36,7 +36,7 @@ void aplicarCorrimiento(const char* origen, char* destino, int k) {
     destino[i] = '\0';
 }
  
-bool buscarmozoPUP (FILE* f, int idmozo, mozo &m){
+bool buscarMozoPUP (FILE* f, int idmozo, mozo &m){
     if (idmozo <= 0) return false;
     long pup = idmozo - 1;
     fseek(f, pup * sizeof(mozo), SEEK_SET);
@@ -44,4 +44,10 @@ bool buscarmozoPUP (FILE* f, int idmozo, mozo &m){
     return (leido == 1 && m.idmozo == idmozo);
 }
 
+bool validarLogin(FILE* fmozos, int idmozo, const char* claveTipeada, mozo &m) {
+    if (!buscarMozoPUP(fmozos, idmozo, m)) return false;
+    char claveTransformada[20];
+    aplicarCorrimiento(claveTipeada, claveTransformada, K);
+    return (strcmp(claveTransformada, m.password) == 0);
+}
 
