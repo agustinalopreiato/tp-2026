@@ -36,4 +36,12 @@ void aplicarCorrimiento(const char* origen, char* destino, int k) {
     destino[i] = '\0';
 }
  
+bool buscarmozoPUP (FILE* f, int idmozo, mozo &m){
+    if (idmozo <= 0) return false;
+    long pup = idmozo - 1;
+    fseek(f, pup * sizeof(mozo), SEEK_SET);
+    int leido = fread(&m, sizeof(mozo), 1, f);
+    return (leido == 1 && m.idmozo == idmozo);
+}
+
 
