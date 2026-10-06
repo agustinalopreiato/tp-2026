@@ -51,3 +51,19 @@ bool validarLogin(FILE* fmozos, int idmozo, const char* claveTipeada, mozo &m) {
     return (strcmp(claveTransformada, m.password) == 0);
 }
 
+bool buscarProductoBinaria(FILE* f, int codigo, producto &p, long &posEncontrada) {
+    fseek(f, 0, SEEK_END);
+    long n = ftell(f) / sizeof(producto);
+    long pri = 0, ult = n - 1, pos = -1;
+    while (pri <= ult && pos == -1) {
+        long med = (pri + ult) / 2;
+        fseek(f, med * sizeof(producto), SEEK_SET);
+        fread(&p, sizeof(producto), 1, f);
+        if (p.codigo == codigo) pos = med;
+        else if (codigo > p.codigo) pri = med + 1;
+        else ult = med - 1;
+    }
+ posEncontrada = pos;
+ return (pos != -1);
+} 
+
