@@ -67,3 +67,11 @@ bool buscarProductoBinaria(FILE* f, int codigo, producto &p, long &posEncontrada
  return (pos != -1);
 } 
 
+void descontarStock(FILE* f, long pos, int cantidad) {
+    producto p;
+    fseek(f, pos * sizeof(producto), SEEK_SET);
+    fread(&p, sizeof(producto), 1, f);
+    p.stockactual -= cantidad;
+    fseek(f, pos * sizeof(producto), SEEK_SET);
+    fwrite(&p, sizeof(producto), 1, f);
+}
