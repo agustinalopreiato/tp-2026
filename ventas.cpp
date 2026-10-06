@@ -75,3 +75,25 @@ void descontarStock(FILE* f, long pos, int cantidad) {
     fseek(f, pos * sizeof(producto), SEEK_SET);
     fwrite(&p, sizeof(producto), 1, f);
 }
+
+void ordenarPlanillaPorMozo (const char* nombreArchivo){
+    FILE* f = fopen(nombreArchivo, "rb+");
+    if (f == NULL)return;
+    vector<comanda> ventas;
+    comanda c;
+    while (fread(&c, sizeof(comanda), 1, f) == 1) {
+        ventas.push_back(c);
+    }
+    fclose(f);
+    int n = (int)ventas.size();
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (ventas[j].idmozo > ventas[j + 1].idmozo) {
+                comanda temp = ventas[j];
+                ventas[j] = ventas[j + 1];
+                ventas[j + 1] = temp;
+            }
+        }
+    }
+}
+
