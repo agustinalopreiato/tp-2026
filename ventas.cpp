@@ -103,3 +103,33 @@ void ordenarPlanillaPorMozo (const char* nombreArchivo){
         }
     fclose(f);
 }
+
+int main() {
+    char fecha[11];
+    cout << "Ingrese la fecha de la venta (dd/mm/aaaa): ";
+    cin >> fecha;
+
+    char nombreArchivo[20];
+    sprintf(nombreArchivo, "comandas_%s.dat", fecha);
+
+    FILE* fmozos = fopen("mozos.dat", "rb");
+    if (fmozos == NULL) {
+        cout << "Error al abrir el archivo de mozos.dat" << endl;
+        return 1;
+    }
+
+     FILE* finventario = fopen("inventario.dat", "rb+");
+    if (finventario == NULL) {
+        cout << "Error al abrir el archivo de inventario.dat" << endl;
+        fclose(fmozos);
+        return 1;
+    }
+    FILE* fdia = fopen(nombreArchivo, "ab");
+    if (fdia == NULL) {
+        cout << "Error al crear el archivo de ventas del dia" << endl;
+        fclose(fmozos);
+        fclose(finventario);
+        return 1;
+    }
+    
+}
