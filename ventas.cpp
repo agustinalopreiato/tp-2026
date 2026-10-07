@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
-#include <cstring> 
+#include <cstring>
+#include <vector>
 using namespace std;
 
 struct mozo {
@@ -95,5 +96,10 @@ void ordenarPlanillaPorMozo (const char* nombreArchivo){
             }
         }
     }
+    f = fopen(nombreArchivo, "wb");
+        if (f == NULL) return;
+        for (int i=0; i < n; i++) {
+            fwrite(&ventas[i], sizeof(comanda), 1, f);
+        }
+    fclose(f);
 }
-
