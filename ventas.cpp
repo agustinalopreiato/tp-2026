@@ -132,54 +132,72 @@ int main() {
         return 1;
     }
     int idmozo;
-    cout << "Ingrese el ID del mozo (0 para finalizar): ";
-    cin >> idmozo;
-    if (idmozo == 0) {
-        cout << "No se ingresaron ventas." << endl;
-        fclose(fmozos);
-        fclose(finventario);
-        fclose(fdia);
-        return 0;
-    }
-    char clave[20];
-    cout << "Ingrese la clave del mozo: ";
-    cin >> clave;
-    mozo m;
-    if (!validarLogin(fmozos, idmozo, clave, m)) {
-        cout << "ID de mozo o clave incorrectos." << endl;
-        fclose(fmozos);
-        fclose(finventario);
-        fclose(fdia);
-        return 1;
-    }
-    int codigoproducto, cantidad;
-    cout << "Ingrese el codigo del producto (0 para finalizar): ";
-    cin >> codigoproducto;
-    producto p;
-    long posEncontrada;
-    if (!buscarProductoBinaria(finventario, codigoproducto, p, posEncontrada)) {
-        cout << "Producto no encontrado." << endl;
-        fclose(fmozos);
-        fclose(finventario);
-        fclose(fdia);
-        return 1;
-    }
-    cout << "Ingrese la cantidad vendida: ";
-    cin >> cantidad;
-    if (cantidad<=0){
-        cout << "Cantidad invalida." << endl;
-        fclose(fmozos);
-        fclose(finventario);
-        fclose(fdia);
-        return 1;
-    }
-    if (cantidad > p.stockactual) {
-        cout << "Stock insuficiente. Stock actual: " << p.stockactual << endl;
-        fclose(fmozos);
-        fclose(finventario);
-        fclose(fdia);
-        return 1;
-    }
+    do {
+        cout << "Ingrese el ID del mozo (0 para finalizar): ";
+        cin >> idmozo;
+        if (idmozo == 0) {
+            cout << "No se ingresaron ventas." << endl;
+            fclose(fmozos);
+            fclose(finventario);
+            fclose(fdia);
+            return 0;
+        }
+        char clave[20];
+        cout << "Ingrese la clave del mozo: ";
+        cin >> clave;
+        mozo m;
+        if (!validarLogin(fmozos, idmozo, clave, m)) {
+            cout << "ID de mozo o clave incorrectos." << endl;
+            fclose(fmozos);
+            fclose(finventario);
+            fclose(fdia);
+            return 1;
+        }
+        int codigoproducto, cantidad;
+        cout << "Ingrese el codigo del producto (0 para finalizar): ";
+        cin >> codigoproducto;
+        producto p;
+        long posEncontrada;
+        if (!buscarProductoBinaria(finventario, codigoproducto, p, posEncontrada)) {
+            cout << "Producto no encontrado." << endl;
+            fclose(fmozos);
+            fclose(finventario);
+            fclose(fdia);
+            return 1;
+        }
+        cout << "Ingrese la cantidad vendida: ";
+        cin >> cantidad;
+        if (cantidad<=0){
+            cout << "Cantidad invalida." << endl;
+            fclose(fmozos);
+            fclose(finventario);
+            fclose(fdia);
+            return 1;
+        }
+        if (cantidad > p.stockactual) {
+            cout << "Stock insuficiente. Stock actual: " << p.stockactual << endl;
+            fclose(fmozos);
+            fclose(finventario);
+            fclose(fdia);
+            return 1;
+        }
+        float comision = cantidad * p.precio * TASA_COMISION;
+        
+        comanda c;
+        c.idmozo = idmozo;
+        c.codigoproducto = codigoproducto;
+        c.cantidad = cantidad;
+        c.comision = comision;
+        fwrite(&c, sizeof(comanda), 1, fdia);
+        descontarStock(finventario, posEncontrada, cantidad);
 
-    
+        cout << "Venta registrada. Comision del mozo: " << comision << endl;
+    } while (true);
+    fclose(fmozos);
+    fclose(finventario);
+    fclose(fdia);
+    ordenarPlanillaPorMozo(nombreArchivo);
+
+    cout << "Archivo de ventas del dia" << nombreArchivo << "generado y ordenado por mozo." << endl;
+    return 0;
 }
