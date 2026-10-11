@@ -17,6 +17,7 @@ struct Comanda {
 };
 
 const char* ARCHIVO_SEMANAL = "comandas_semana_sX-mm.dat";
+const char* ARCHIVO_MOZOS = "mozos.dat";
 
 int buscarMozo(const char* nombredelarchivo, int idMozo, Mozo& m) {
     FILE* f = fopen(nombredelarchivo, "rb");
@@ -42,7 +43,8 @@ void resumenSemanal(const char* nombredelarchivo) {
     if (f == NULL) { cout << "No se pudo abrir " << nombredelarchivo << "." << endl; return; }
 
     Comanda c;
-    int leido = fread(&c, sizeof(Comanda), 1, f);         
+    Mozo m;
+    int leido = fread(&c, sizeof(Comanda), 1, f);          // lectura anticipada
 
     while (leido == 1) {
         int mozoActual = c.idMozo;
@@ -55,8 +57,13 @@ void resumenSemanal(const char* nombredelarchivo) {
             leido = fread(&c, sizeof(Comanda), 1, f);
         }
 
-        cout << "Mozo " << mozoActual << ": " << productos
-             << " productos, comision $" << comision << endl;
+        if (buscarMozo(ARCHIVO_MOZOS, mozoActual, m) == 1) {
+            cout << m.nombre << ": " << productos
+                 << " productos, comision $" << comision << endl;
+        } else {
+            cout << "Mozo " << mozoActual << ": " << productos
+                 << " productos, comision $" << comision << endl;
+        }
     }
 
     fclose(f);
