@@ -11,6 +11,44 @@ struct comanda {
     float comision;
 };
 
+long apareo(const char *nomA, const char *nomB, const char *nomC) {
+    FILE *a = fopen(nomA, "rb");
+    if (a == NULL) return -1;
+    FILE *b = fopen(nomB, "rb");
+    if (b == NULL) { fclose(a); return -1; }
+    FILE *c = fopen(nomC, "wb");
+    if (c == NULL) { fclose(a); fclose(b); return -1; }
+
+    comanda ra, rb;
+    long grabados = 0;
+    int la = fread(&ra, sizeof(comanda), 1, a);   
+    int lb = fread(&rb, sizeof(comanda), 1, b);
+
+    while (la == 1 && lb == 1) {                 
+        if (ra.idmozo <= rb.idmozo) {
+            fwrite(&ra, sizeof(comanda), 1, c);
+            la = fread(&ra, sizeof(comanda), 1, a);
+        } else {
+            fwrite(&rb, sizeof(comanda), 1, c);
+            lb = fread(&rb, sizeof(comanda), 1, b);
+        }
+        grabados++;
+    }
+    while (la == 1) {                            
+        fwrite(&ra, sizeof(comanda), 1, c);
+        la = fread(&ra, sizeof(comanda), 1, a);
+        grabados++;
+    }
+    while (lb == 1) {                            
+        fwrite(&rb, sizeof(comanda), 1, c);
+        lb = fread(&rb, sizeof(comanda), 1, b);
+        grabados++;
+    }
+
+    fclose(a); fclose(b); fclose(c);
+    return grabados;
+}
+
 int main() {
     const int MAX_DIAS = 7;
     char fechas[MAX_DIAS][11];
