@@ -44,6 +44,7 @@ void resumenSemanal(const char* nombredelarchivo) {
 
     Comanda c;
     Mozo m;
+    int totalGeneral = 0;
     int leido = fread(&c, sizeof(Comanda), 1, f);          // lectura anticipada
 
     while (leido == 1) {
@@ -57,6 +58,8 @@ void resumenSemanal(const char* nombredelarchivo) {
             leido = fread(&c, sizeof(Comanda), 1, f);
         }
 
+        totalGeneral += productos;
+
         if (buscarMozo(ARCHIVO_MOZOS, mozoActual, m) == 1) {
             cout << m.nombre << ": " << productos
                  << " productos, comision $" << comision << endl;
@@ -66,6 +69,7 @@ void resumenSemanal(const char* nombredelarchivo) {
         }
     }
 
+    cout << "Total de productos vendidos en la semana: " << totalGeneral << endl;
     fclose(f);
 }
 
