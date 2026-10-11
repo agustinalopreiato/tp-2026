@@ -64,7 +64,7 @@ void resumenSemanal(const char* nombredelarchivo) {
             cout << m.nombre << ": " << productos
                  << " productos, comision $" << comision << endl;
         } else {
-            cout << "Mozo " << mozoActual << ": " << productos
+            cout << "Mozo " << mozoActual << " (no esta en mozos.dat): " << productos
                  << " productos, comision $" << comision << endl;
         }
     }
