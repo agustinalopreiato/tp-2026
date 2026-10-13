@@ -11,3 +11,9 @@ struct ComandaHistorica{
     int Cantidad;
     float Comision;
 };
+struct mozo{
+    int iDmozo;
+    char nombre[50];
+    char password[20];
+    float totalComision;    
+};
