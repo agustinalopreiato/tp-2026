@@ -128,3 +128,16 @@ bool descontarStock (FILE* inv, int codigo, int cantidad){
         else desde = medio + 1;
     }
     return false;
+}
+void actualizarStock (ComandaHistorica ventas [], int cantidadVentas){
+    FILE* inv = fopen("inventario.dat", "rb+");
+    if (inv == NULL){
+        cout << "Error al abrir inventario.dat" << endl;
+        return;
+    }
+    for (int i = 0; i < cantidadVentas; i++){
+        if (!descontarStock(inv, ventas[i].CodigoProducto, ventas[i].Cantidad))
+            cout << "Aviso: producto " << ventas[i].CodigoProducto << " no existe en el inventario" << endl;
+    }
+    fclose(inv);
+}
