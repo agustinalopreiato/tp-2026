@@ -61,4 +61,40 @@ void asignarIds (ComandaHistorica ventas [], int cantidadVentas, int ids []){
         if (i < cantidadVentas - 1 && strcmp(ventas[i].NombreMozo, ventas[i + 1].NombreMozo) != 0)
             iDmozo++;
     }
+}
+void crearPlanillasPorDia (ComandaHistorica ventas [], int cantidadVentas, int ids []){
+    char fechas[MAX_FECHAS][11];
+    int cantFechas = 0;
+    for (int i = 0; i < cantidadVentas; i++){
+        if (buscarFecha(fechas, cantFechas, ventas[i].fecha) == -1 && cantFechas < MAX_FECHAS){
+            strcpy(fechas[cantFechas], ventas[i].fecha);
+            cantFechas++;
+        }
+    }
+    for (int d = 0; d < cantFechas; d++){
+        char nombreArchivo[40];
+        strcpy(nombreArchivo, "comandas_");
+        strcat(nombreArchivo, fechas[d]);
+        strcat(nombreArchivo, ".dat");
 
+        FILE* f = fopen(nombreArchivo, "wb");
+        if (f == NULL){
+            cout << "Error al crear " << nombreArchivo << endl;
+            continue;
+        }
+        int cant = 0;
+        for (int i = 0; i < cantidadVentas; i++){
+            if (strcmp(ventas[i].fecha, fechas[d]) == 0){
+                Comanda c;
+                c.idMozo = ids[i];
+                c.codigoProducto = ventas[i].CodigoProducto;
+                c.cantidad = ventas[i].Cantidad;
+                c.comision = ventas[i].Comision;
+                fwrite(&c, sizeof(Comanda), 1, f);
+                cant++;
+            }
+        }
+        fclose(f);
+        cout << nombreArchivo << " -> " << cant << " ventas" << endl;
+    }
+}
