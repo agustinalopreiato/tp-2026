@@ -53,3 +53,12 @@ void crearMozos (const char* nombre, ComandaHistorica ventas [], int cantidadVen
         }
     }
     fclose(f);
+}
+void asignarIds (ComandaHistorica ventas [], int cantidadVentas, int ids []){
+    int iDmozo = 1;
+    for (int i = 0; i < cantidadVentas; i++){
+        ids[i] = iDmozo;
+        if (i < cantidadVentas - 1 && strcmp(ventas[i].NombreMozo, ventas[i + 1].NombreMozo) != 0)
+            iDmozo++;
+    }
+
