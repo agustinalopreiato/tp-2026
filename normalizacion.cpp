@@ -4,6 +4,7 @@
 #include <string>
 using namespace std;
 const int K = 4;
+const int MAX_FECHAS = 60;
 struct ComandaHistorica{
     char fecha[11];
     char NombreMozo[50];
@@ -61,6 +62,11 @@ void asignarIds (ComandaHistorica ventas [], int cantidadVentas, int ids []){
         if (i < cantidadVentas - 1 && strcmp(ventas[i].NombreMozo, ventas[i + 1].NombreMozo) != 0)
             iDmozo++;
     }
+    }
+int buscarFecha (char fechas[][11], int cantFechas, const char* fecha){
+    for (int i = 0; i < cantFechas; i++)
+        if (strcmp(fechas[i], fecha) == 0) return i;
+    return -1;
 }
 void crearPlanillasPorDia (ComandaHistorica ventas [], int cantidadVentas, int ids []){
     char fechas[MAX_FECHAS][11];
