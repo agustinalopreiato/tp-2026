@@ -11,6 +11,18 @@ struct ComandaHistorica{
     int Cantidad;
     float Comision;
 };
+struct Comanda{
+    int idMozo;
+    int codigoProducto;
+    int cantidad;
+    float comision;
+};
+struct Producto{
+    int codigo;
+    char descripcion[50];
+    float precio;
+    int stockActual;
+};
 struct mozo{
     int iDmozo;
     char nombre[50];
