@@ -98,3 +98,27 @@ void crearPlanillasPorDia (ComandaHistorica ventas [], int cantidadVentas, int i
         cout << nombreArchivo << " -> " << cant << " ventas" << endl;
     }
 }
+bool descontarStock (FILE* inv, int codigo, int cantidad){
+    fseek(inv, 0, SEEK_END);
+    int n = ftell(inv) / sizeof(Producto);
+    int desde = 0, hasta = n - 1;
+    Producto p;
+    while (desde <= hasta){
+        int medio = (desde + hasta) / 2;
+        fseek(inv, medio * sizeof(Producto), SEEK_SET);
+        fread(&p, sizeof(Producto), 1, inv);
+        if (p.codigo == codigo){
+            if (p.stockActual < cantidad){
+                cout << "Aviso: producto " << codigo << " sin stock suficiente, queda en 0" << endl;
+                p.stockActual = 0;
+            } else {
+                p.stockActual = p.stockActual - cantidad;
+            }
+            fseek(inv, medio * sizeof(Producto), SEEK_SET);
+            fwrite(&p, sizeof(Producto), 1, inv);
+            return true;
+        }
+        if (codigo < p.codigo) hasta = medio - 1;
+        else desde = medio + 1;
+    }
+    return false;
