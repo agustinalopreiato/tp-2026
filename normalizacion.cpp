@@ -141,3 +141,40 @@ void actualizarStock (ComandaHistorica ventas [], int cantidadVentas){
     }
     fclose(inv);
 }
+int main() {
+ FILE*archivo=fopen("comandas_historicas.dat", "rb");
+    if(archivo==NULL){
+    cout<<"Error al abrir el archivo"<<endl;
+    return 1;
+    }
+    fseek(archivo, 0, SEEK_END);
+    long tamanio=ftell(archivo);
+    int cantidadVentas=tamanio/sizeof(ComandaHistorica);
+    fseek(archivo, 0, SEEK_SET);
+    ComandaHistorica* ventas=new ComandaHistorica[cantidadVentas];
+    ComandaHistorica c;
+    int i=0;
+    while(fread(&c, sizeof(ComandaHistorica), 1, archivo)==1){
+    ventas[i]=c;
+    i++;
+    }
+    fclose(archivo);
+    for (int pasada=0; pasada<cantidadVentas-1; pasada++){
+        for (int j=0; j<cantidadVentas-1; j++){
+            if (strcmp(ventas[j].NombreMozo, ventas[j+1].NombreMozo) > 0){
+             ComandaHistorica aux;
+             aux = ventas[j];
+             ventas[j] = ventas[j+1];
+             ventas[j+1] = aux;
+            }
+        }
+    }
+ crearMozos("mozos.dat", ventas, cantidadVentas);
+ int* ids = new int[cantidadVentas];
+ asignarIds(ventas, cantidadVentas, ids);
+ crearPlanillasPorDia(ventas, cantidadVentas, ids);
+ delete[] ids;
+ actualizarStock(ventas, cantidadVentas);
+ delete[] ventas;
+ return 0;
+}
