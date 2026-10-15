@@ -16,7 +16,6 @@ struct Comanda {
     float comision;
 };
 
-const char* ARCHIVO_SEMANAL = "comandas_semana_sX-mm.dat";
 const char* ARCHIVO_MOZOS = "mozos.dat";
 
 int buscarMozo(const char* nombredelarchivo, int idMozo, Mozo& m) {
@@ -45,7 +44,7 @@ void resumenSemanal(const char* nombredelarchivo) {
     Comanda c;
     Mozo m;
     int totalGeneral = 0;
-    int leido = fread(&c, sizeof(Comanda), 1, f);          // lectura anticipada
+    int leido = fread(&c, sizeof(Comanda), 1, f);          
 
     while (leido == 1) {
         int mozoActual = c.idMozo;
@@ -74,6 +73,12 @@ void resumenSemanal(const char* nombredelarchivo) {
 }
 
 int main() {
-    resumenSemanal(ARCHIVO_SEMANAL);
+    char sufijo[20];
+    cout << "Identificador de la semana (ej: s1-06): ";
+    cin >> sufijo;
+
+    char nombreArchivo[60];
+    sprintf(nombreArchivo, "comandas_semana_%s.dat", sufijo);
+    resumenSemanal(nombreArchivo);
     return 0;
 }
