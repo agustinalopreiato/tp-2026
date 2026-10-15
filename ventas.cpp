@@ -12,7 +12,7 @@ struct mozo {
 };
 struct producto{
     int codigo;
-    char descripcion;
+    char descripcion[50];
     float precio;
     int stockactual;
 };
@@ -109,7 +109,7 @@ int main() {
     cout << "Ingrese la fecha de la venta (dd/mm/aaaa): ";
     cin >> fecha;
 
-    char nombreArchivo[20];
+    char nombreArchivo[50];
     sprintf(nombreArchivo, "comandas_%s.dat", fecha);
 
     FILE* fmozos = fopen("mozos.dat", "rb");
