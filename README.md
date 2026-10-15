@@ -31,6 +31,10 @@ Funciones principales
 -Actualización del inventario: descuenta del stock las cantidades vendidas de cada producto.
 -Control de errores: informa si no se puede abrir un archivo, si un producto no existe en el inventario o si no hay stock suficiente
 
+Objetivo final
+
+Automatizar el procesamiento de las ventas de un restaurante, centralizando la información de los mozos, organizando las comandas por fecha y manteniendo actualizado el inventario de productos.
+
 ## Ventas.cpp
 Pide la fecha del dia una sola vez (dd-mm-aaaa) y abre la planilla comandas_dd-mm-aaaa.dat con ab, si no existe la crea y si ya existe agrega al final sin tocar lo anterior. Despues por cada venta pide:
 - Id de mozo y su clave, y los valida
