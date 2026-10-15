@@ -21,6 +21,16 @@ La consigna completa está en **`enunciado.pdf`**. Leela antes de arrancar: el
 cliente (Alberto) cuenta su problema a su manera y ustedes tienen que descubrir
 cómo resolverlo con lo que vimos de archivos.
 
+## normalizacion.cpp
+Funciones principales
+
+-Ordenamiento de ventas: ordena las comandas históricas alfabéticamente por el nombre del mozo.
+-Generación de mozos: crea el archivo mozos.dat, almacenando el identificador, nombre, contraseña y comisión total de cada mozo.
+-Generación de identificadores: asigna un ID a cada mozo para relacionarlo con sus comandas.
+-Separación de comandas por fecha: genera un archivo independiente para cada día, con las ventas correspondientes a esa fecha.
+-Actualización del inventario: descuenta del stock las cantidades vendidas de cada producto.
+-Control de errores: informa si no se puede abrir un archivo, si un producto no existe en el inventario o si no hay stock suficiente
+
 ## Ventas.cpp
 Pide la fecha del dia una sola vez (dd-mm-aaaa) y abre la planilla comandas_dd-mm-aaaa.dat con ab, si no existe la crea y si ya existe agrega al final sin tocar lo anterior. Despues por cada venta pide:
 - Id de mozo y su clave, y los valida
