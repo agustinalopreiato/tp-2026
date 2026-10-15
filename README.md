@@ -61,6 +61,15 @@ log₂(N) accesos a disco y devuelve la posicion del producto.
 - Descontar stock: editar un registro in situ, para poder modificar el archivo sin reescribirlo todo. Como ya sabemos la posición del producto, nos paramos ahí con `fseek`, leemos, restamos la cantidad, volvemos a apuntar al mismo lugar y grabamos con `fwrite`. ´
 - Ordenar planilla por mozo: Ordenar adentro del archivo sería ineficiente por el costo de disco, por eso lo llevamos a memoria (a un vector). Se ordena por idmozo con burbuja (en cada pasada compara pares adyacentes e intercambia si están en orden incorrecto) y se reescribe el archivo con `wb`.
 
+## cierre.cpp
+Junta las planillas de todos los días de la semana en una sola planilla semanal, ordenada por mozo. Pide por teclado: las fechas de los días (hasta 7 pero se puede terminar antes con `0`), el identificador de la semana (por ejemplo `s1-06`), y genera `comandas_semana_s1-06.dat`.
+
+Partes clave:
+- Apareo: cada planilla diaria ya queda ordenada por id de mozo, así que se intercalan de a dos archivos: se compara el registro actual de cada uno, se graba el de menor id de mozo y se avanza solo ese archivo. Cuando uno se agota, se vuelca lo que queda del otro. Es mejor que cargar todo en un arreglo y ordenar con burbuja porque recorre cada archivo una vez, usa memoria constante y no tiene tope de comandas.
+- Cuando tengo más de dos días: se parte de un acumulado vacío y se lo aparea con cada día, alternando dos archivos temporales (`tmp_semana_a.dat` y `tmp_semana_b.dat`), porque no se puede leer y escribir el mismo archivo a la vez. Y al terminar, el acumulado se renombra a la planilla semanal.
+- Orden: si un mismo mozo está en los dos archivos, sale primero el del acumulado, así se conserva el orden de los días.
+- Inexistencia: si la planilla de un día no existe, se avisa y se omite; si no existe ninguno, no se genera la semanal.
+
 ## Resumen.cpp
 
 Pide por teclado el identificador de la semana (por ejemplo s1-06), arma el nombre comandas_semana_s1-06.dat y abre esa planilla semanal en modo lectura. Recorre las ventas de la semana, que vienen ordenadas por mozo, y por cada mozo muestra su nombre, cuántos productos vendió y cuánta comisión se le debe pagar. Al final muestra el total de productos que vendió el buffet en toda la semana.
