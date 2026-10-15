@@ -28,13 +28,12 @@ Pide la fecha del dia una sola vez (dd-mm-aaaa) y abre la planilla comandas_dd-m
 - Cantidad vendida y verifica el stock
 Luego calcula la comision y descuenta lo vendido del stock. Por ultimo, registra la venta y ordena la planilla del dia por mozo.
 Tecnicas elegidas:
+- Corrimiento de la clave:Para que las claves de los mozos no queden legibles en mozos.dat, las guardamos transformadas, la función recorre la clave carácter por carácter y le suma un número fijo (K = 4) al código ASCII de cada uno. A la clave que tipea el mozo le aplicamos la misma cuenta y la comparamos con strcmp contra lo guardado en el archivo.
 - Buscar mozo con PUP: porque normalizacion.cpp numera a los mozos a partir del 1 y sin huecos, por lo   que el mozo "idmozo" esta en la posicion idmozo - 1. Con el `fseek` y el `fread` lo leemos.
 - Buscar producto con busqueda binaria: inventario.dat está ordenado por código pero con huecos, así que PUP no sirve. En cada paso se descarta la mitad, con costo
 log₂(N) accesos a disco y devuelve la posicion del producto. 
 - Descontar stock: editar un registro in situ, para poder modificar el archivo sin reescribirlo todo. Como ya sabemos la posición del producto, nos paramos ahí con `fseek`, leemos, restamos la cantidad, volvemos a apuntar al mismo lugar y grabamos con `fwrite`. ´
 - Ordenar planilla por mozo: Ordenar adentro del archivo sería ineficiente por el costo de disco, por eso lo llevamos a memoria (a un vector). Se ordena por idmozo con burbuja (en cada pasada compara pares adyacentes e intercambia si están en orden incorrecto) y se reescribe el archivo con `wb`.
-
-
 
 ## Estructura del repo
 
