@@ -137,10 +137,7 @@ int main() {
         cin >> idmozo;
         if (idmozo == 0) {
             cout << "No se ingresaron ventas." << endl;
-            fclose(fmozos);
-            fclose(finventario);
-            fclose(fdia);
-            return 0;
+            break;
         }
         char clave[20];
         cout << "Ingrese la clave del mozo: ";
@@ -148,10 +145,7 @@ int main() {
         mozo m;
         if (!validarLogin(fmozos, idmozo, clave, m)) {
             cout << "ID de mozo o clave incorrectos." << endl;
-            fclose(fmozos);
-            fclose(finventario);
-            fclose(fdia);
-            return 1;
+            continue;
         }
         int codigoproducto, cantidad;
         cout << "Ingrese el codigo del producto (0 para finalizar): ";
@@ -160,26 +154,17 @@ int main() {
         long posEncontrada;
         if (!buscarProductoBinaria(finventario, codigoproducto, p, posEncontrada)) {
             cout << "Producto no encontrado." << endl;
-            fclose(fmozos);
-            fclose(finventario);
-            fclose(fdia);
-            return 1;
+          continue;
         }
         cout << "Ingrese la cantidad vendida: ";
         cin >> cantidad;
         if (cantidad<=0){
             cout << "Cantidad invalida." << endl;
-            fclose(fmozos);
-            fclose(finventario);
-            fclose(fdia);
-            return 1;
+            continue;
         }
         if (cantidad > p.stockactual) {
             cout << "Stock insuficiente. Stock actual: " << p.stockactual << endl;
-            fclose(fmozos);
-            fclose(finventario);
-            fclose(fdia);
-            return 1;
+            continue;
         }
         float comision = cantidad * p.precio * TASA_COMISION;
         
