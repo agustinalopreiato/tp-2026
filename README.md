@@ -22,6 +22,18 @@ cliente (Alberto) cuenta su problema a su manera y ustedes tienen que descubrir
 cómo resolverlo con lo que vimos de archivos.
 
 ## normalizacion.cpp
+Funcionamiento
+
+Este programa permite procesar un archivo de comandas históricas de un restaurante para generar archivos con información de los mozos, organizar las comandas por día y actualizar el stock de los productos vendidos.
+El sistema trabaja con archivos binarios para almacenar y modificar la información.
+
+Requisitos
+
+-Un compilador compatible con C++, como g++.
+-El archivo comandas_historicas.dat con registros del tipo ComandaHistorica.
+-El archivo inventario.dat con registros del tipo Producto, ordenados por código.
+-Los archivos binarios deben haberse generado utilizando estructuras compatibles con las definidas en el programa.
+
 Funciones principales
 
 -Ordenamiento de ventas: ordena las comandas históricas alfabéticamente por el nombre del mozo.
