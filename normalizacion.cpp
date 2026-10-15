@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdio>
 #include <cstring>  
-#include <string>
 using namespace std;
 const int K = 4;
 const int MAX_FECHAS = 60;
@@ -30,6 +29,18 @@ struct mozo{
     char password[20];
     float totalComision;    
 };
+void enteroACadena (int n, char cad[]){
+    char aux[12];
+    int i = 0;
+    if (n == 0) aux[i++] = '0';
+    while (n > 0){
+        aux[i++] = '0' + n % 10;
+        n = n / 10;
+    }
+    int j = 0;
+    while (i > 0) cad[j++] = aux[--i];
+    cad[j] = '\0';
+}
 void crearMozos (const char* nombre, ComandaHistorica ventas [], int cantidadVentas){
     FILE* f = fopen(nombre, "wb");
     if (f == NULL) {
@@ -45,7 +56,7 @@ void crearMozos (const char* nombre, ComandaHistorica ventas [], int cantidadVen
             m.iDmozo = iDmozo++;
             strcpy(m.nombre, ventas[i].NombreMozo);
             m.totalComision = suma;
-            strcpy(m.password, to_string(m.iDmozo).c_str());
+            enteroACadena(m.iDmozo, m.password);
             for (int k = 0; m.password[k] != '\0'; k++) {
                 m.password[k] = m.password[k] + K;
             }
