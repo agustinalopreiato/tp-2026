@@ -136,12 +136,13 @@ int main() {
         cout << "Ingrese el ID del mozo (0 para finalizar): ";
         cin >> idmozo;
         if (idmozo == 0) {
-            cout << "No se ingresaron ventas." << endl;
-            break;
+            cout << "Id no encontrado." << endl;
+            continue;
         }
         char clave[20];
         cout << "Ingrese la clave del mozo: ";
         cin >> clave;
+        if (strcmp(clave, "0") == 0) continue;
         mozo m;
         if (!validarLogin(fmozos, idmozo, clave, m)) {
             cout << "ID de mozo o clave incorrectos." << endl;
@@ -150,6 +151,7 @@ int main() {
         int codigoproducto, cantidad;
         cout << "Ingrese el codigo del producto (0 para finalizar): ";
         cin >> codigoproducto;
+        if (codigoproducto == 0) break;
         producto p;
         long posEncontrada;
         if (!buscarProductoBinaria(finventario, codigoproducto, p, posEncontrada)) {
@@ -158,6 +160,7 @@ int main() {
         }
         cout << "Ingrese la cantidad vendida: ";
         cin >> cantidad;
+        if (cantidad == 0) break;
         if (cantidad<=0){
             cout << "Cantidad invalida." << endl;
             continue;
@@ -183,6 +186,6 @@ int main() {
     fclose(fdia);
     ordenarPlanillaPorMozo(nombreArchivo);
 
-    cout << "Archivo de ventas del dia" << nombreArchivo << "generado y ordenado por mozo." << endl;
+    cout << "Archivo de ventas del dia " << nombreArchivo << " generado y ordenado por mozo." << endl;
     return 0;
 }
