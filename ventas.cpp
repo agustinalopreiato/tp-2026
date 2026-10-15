@@ -159,7 +159,7 @@ int main() {
         cout << "Ingrese la cantidad vendida: ";
         cin >> cantidad;
         if (cantidad == 0) break;
-        if (cantidad<=0){
+        if (cantidad < 0){
             cout << "Cantidad invalida." << endl;
             continue;
         }
