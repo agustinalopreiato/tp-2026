@@ -71,7 +71,6 @@ void resumenSemanal(const char* nombredelarchivo) {
     cout << "Total de productos vendidos en la semana: " << totalGeneral << endl;
     fclose(f);
 }
-
 int main() {
     char sufijo[20];
     cout << "Identificador de la semana (ej: s1-06): ";
