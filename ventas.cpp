@@ -106,7 +106,7 @@ void ordenarPlanillaPorMozo (const char* nombreArchivo){
 
 int main() {
     char fecha[11];
-    cout << "Ingrese la fecha de la venta (dd/mm/aaaa): ";
+    cout << "Ingrese la fecha de la venta (dd-mm-aaaa): ";
     cin >> fecha;
 
     char nombreArchivo[50];
