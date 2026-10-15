@@ -61,6 +61,16 @@ log₂(N) accesos a disco y devuelve la posicion del producto.
 - Descontar stock: editar un registro in situ, para poder modificar el archivo sin reescribirlo todo. Como ya sabemos la posición del producto, nos paramos ahí con `fseek`, leemos, restamos la cantidad, volvemos a apuntar al mismo lugar y grabamos con `fwrite`. ´
 - Ordenar planilla por mozo: Ordenar adentro del archivo sería ineficiente por el costo de disco, por eso lo llevamos a memoria (a un vector). Se ordena por idmozo con burbuja (en cada pasada compara pares adyacentes e intercambia si están en orden incorrecto) y se reescribe el archivo con `wb`.
 
+## Resumen.cpp
+
+Pide por teclado el identificador de la semana (por ejemplo s1-06), arma el nombre comandas_semana_s1-06.dat y abre esa planilla semanal en modo lectura. Recorre las ventas de la semana, que vienen ordenadas por mozo, y por cada mozo muestra su nombre, cuántos productos vendió y cuánta comisión se le debe pagar. Al final muestra el total de productos que vendió el buffet en toda la semana.
+
+Tecnicas elegidas:
+- Corte de control por mozo: como la planilla semanal está ordenada por idMozo, todas las ventas de un mismo mozo quedan juntas. Leemos el primer registro antes del ciclo (lectura anticipada) y, por cada mozo, un ciclo interno acumula la cantidad de productos y la comisión mientras el id no cambie. Cuando cambia, se cierra el grupo, se muestra la línea del mozo y se pasa al siguiente. El último mozo se muestra solo: cuando fread devuelve 0 el ciclo interno termina, se muestra el grupo y recién ahí corta el ciclo externo.
+- Buscar mozo con PUP: la planilla solo tiene el número de mozo y el resumen tiene que mostrar el nombre. Como normalizacion.cpp numera a los mozos desde 1 y sin huecos, el mozo idMozo está en la posición idMozo - 1 de mozos.dat. Con fseek nos paramos ahí y con fread leemos un solo registro, sin recorrer el archivo. La función devuelve 1 si el mozo existe y 0 si no.
+- Total general: antes del ciclo inicializamos un acumulador y, cada vez que se cierra el grupo de un mozo, le sumamos sus productos. Se muestra al final, debajo del resumen por mozo.
+- Casos raros: si la planilla no existe se avisa y el programa termina; si está vacía solo muestra el total en 0; y si una venta trae un idMozo que no está en mozos.dat, el programa no se rompe: muestra igual los totales de ese mozo aclarando que no se encontró.
+
 ## Estructura del repo
 
 ```
