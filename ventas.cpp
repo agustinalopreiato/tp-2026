@@ -25,8 +25,6 @@ struct comanda {
 
 const float TASA_COMISION = 0.10f ; 
 const int K = 4;  
-const char* ARCH_MOZOS = "mozos.dat";
-const char* ARCH_INVENTARIO = "inventario.dat";
 
 void aplicarCorrimiento(const char* origen, char* destino, int k) {
     int i = 0;
@@ -136,13 +134,13 @@ int main() {
         cout << "Ingrese el ID del mozo (0 para finalizar): ";
         cin >> idmozo;
         if (idmozo == 0) {
-            cout << "Id no encontrado." << endl;
-            continue;
+            cout << "Id no valido." << endl;
+            break;
         }
         char clave[20];
         cout << "Ingrese la clave del mozo: ";
         cin >> clave;
-        if (strcmp(clave, "0") == 0) continue;
+        if (strcmp(clave, "0") == 0) break;
         mozo m;
         if (!validarLogin(fmozos, idmozo, clave, m)) {
             cout << "ID de mozo o clave incorrectos." << endl;
