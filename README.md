@@ -21,6 +21,21 @@ La consigna completa está en **`enunciado.pdf`**. Leela antes de arrancar: el
 cliente (Alberto) cuenta su problema a su manera y ustedes tienen que descubrir
 cómo resolverlo con lo que vimos de archivos.
 
+## Ventas.cpp
+Pide la fecha del dia una sola vez (dd-mm-aaaa) y abre la planilla comandas_dd-mm-aaaa.dat con ab, si no existe la crea y si ya existe agrega al final sin tocar lo anterior. Despues por cada venta pide:
+- Id de mozo y su clave, y los valida
+- Codigo del producto y lo busca en el inventario
+- Cantidad vendida y verifica el stock
+Luego calcula la comision y descuenta lo vendido del stock. Por ultimo, registra la venta y ordena la planilla del dia por mozo.
+Tecnicas elegidas:
+- Buscar mozo con PUP: porque normalizacion.cpp numera a los mozos a partir del 1 y sin huecos, por lo   que el mozo "idmozo" esta en la posicion idmozo - 1. Con el `fseek` y el `fread` lo leemos.
+- Buscar producto con busqueda binaria: inventario.dat está ordenado por código pero con huecos, así que PUP no sirve. En cada paso se descarta la mitad, con costo
+log₂(N) accesos a disco y devuelve la posicion del producto. 
+- Descontar stock: editar un registro in situ, para poder modificar el archivo sin reescribirlo todo. Como ya sabemos la posición del producto, nos paramos ahí con `fseek`, leemos, restamos la cantidad, volvemos a apuntar al mismo lugar y grabamos con `fwrite`. ´
+- Ordenar planilla por mozo: Ordenar adentro del archivo sería ineficiente por el costo de disco, por eso lo llevamos a memoria (a un vector). Se ordena por idmozo con burbuja (en cada pasada compara pares adyacentes e intercambia si están en orden incorrecto) y se reescribe el archivo con `wb`.
+
+
+
 ## Estructura del repo
 
 ```
