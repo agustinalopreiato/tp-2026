@@ -11,10 +11,10 @@ Sofia Matilde Lucieri — sofilucieri
 Nahuel Mengo — nmengo2000 
 ## Quién hizo cada parte
 
-- normalizacion.cpp (mozos): <Nahuel Mengo, Santino Bollati>
-- ventas.cpp: <Sofia Matilde Lucieri>
-- cierre.cpp: <Agustina Ayelen Lo Preiato>
-- resumen.cpp: <Azul Katerina Basovsky Paez>
+- normalizacion.cpp (mozos): Nahuel Mengo, Santino Bollati
+- ventas.cpp: Sofia Matilde Lucieri
+- cierre.cpp: Agustina Ayelen Lo Preiato
+- resumen.cpp: Azul Katerina Basovsky Paez
 
 
 La consigna completa está en **`enunciado.pdf`**. Leela antes de arrancar: el
