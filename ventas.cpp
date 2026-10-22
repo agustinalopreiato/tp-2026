@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdio>
 #include <cstring>
-#include <vector>
 using namespace std;
 
 struct mozo {
