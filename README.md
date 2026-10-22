@@ -59,8 +59,7 @@ Tecnicas elegidas:
 - Buscar producto con busqueda binaria: inventario.dat está ordenado por código pero con huecos, así que PUP no sirve. En cada paso se descarta la mitad, con costo
 log₂(N) accesos a disco y devuelve la posicion del producto. 
 - Descontar stock: editar un registro in situ, para poder modificar el archivo sin reescribirlo todo. Como ya sabemos la posición del producto, nos paramos ahí con `fseek`, leemos, restamos la cantidad, volvemos a apuntar al mismo lugar y grabamos con `fwrite`. ´
-- Ordenar planilla por mozo: Ordenar adentro del archivo sería ineficiente por el costo de disco, por eso lo llevamos a memoria (a un vector). Se ordena por idmozo con burbuja (en cada pasada compara pares adyacentes e intercambia si están en orden incorrecto) y se reescribe el archivo con `wb`.
-
+- Ordenar planilla por mozo: La planilla del día crece con cada venta y no se sabe cuántas va a tener, por lo tanto ordenamos directamente sobre el archivo con el metodo burbuja. Abro la planilla con rb+ y calculo la cantidad de ventas. Comparo cada venta con la siguiente por numero de mozo, si están al revés se vuelve a la misma posición con `fseek` y se graban intercambiadas.Se repite hasta que una pasada completa no haga ningún cambio.
 ## cierre.cpp
 Junta las planillas de todos los días de la semana en una sola planilla semanal, ordenada por mozo. Pide por teclado: las fechas de los días (hasta 7 pero se puede terminar antes con `0`), el identificador de la semana (por ejemplo `s1-06`), y genera `comandas_semana_s1-06.dat`.
 
