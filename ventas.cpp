@@ -78,28 +78,25 @@ void descontarStock(FILE* f, long pos, int cantidad) {
 void ordenarPlanillaPorMozo (const char* nombreArchivo){
     FILE* f = fopen(nombreArchivo, "rb+");
     if (f == NULL)return;
-    vector<comanda> ventas;
-    comanda c;
-    while (fread(&c, sizeof(comanda), 1, f) == 1) {
-        ventas.push_back(c);
-    }
-    fclose(f);
-    int n = (int)ventas.size();
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (ventas[j].idmozo > ventas[j + 1].idmozo) {
-                comanda temp = ventas[j];
-                ventas[j] = ventas[j + 1];
-                ventas[j + 1] = temp;
+    fseek(f, 0, SEEK_END);
+    long n = ftell(f) / sizeof(comanda);
+    comanda a, b;
+    bool hubocambio=true;
+    for (long i = 0; i < n - 1; i++) {
+        hubocambio=false;
+        for (long j = 0; j < n - i - 1; j++) {
+            fseek(f, j * sizeof(comanda), SEEK_SET);
+            fread(&a, sizeof(comanda), 1, f);
+            fread(&b, sizeof(comanda), 1, f);
+            if (a.idmozo > b.idmozo) {
+                fseek(f, j * sizeof(comanda), SEEK_SET);
+                fwrite(&b, sizeof(comanda), 1, f);
+                fwrite(&a, sizeof(comanda), 1, f);
+                hubocambio=true;
             }
         }
+        if (!hubocambio) break;
     }
-    f = fopen(nombreArchivo, "wb");
-        if (f == NULL) return;
-        for (int i=0; i < n; i++) {
-            fwrite(&ventas[i], sizeof(comanda), 1, f);
-        }
-    fclose(f);
 }
 
 int main() {
